@@ -3,14 +3,22 @@
 ##                                     Vineyard Analysis Wuerzburg 2021 - Sentinel 2                       ##
 
 #############################################################################################################
-# Final task for the "Introduction to Programming and Geostatistics - MB2 class". This first
 #
-# R Script developed by: Andreas Bury
+######## Final task for the "Introduction to Programming and Geostatistics - MB2 class".             ########
+#
+# R Script developed by: Andreas Bury #
 # 
-# Email: Andreas_Bury@hotmail.de
+# Email: Andreas_Bury@hotmail.de #
 # 
 
-# Load required Packages
+
+
+
+#############################################################################################################
+
+
+
+# Load required Packages #
 
 if(!require(rgdal)){
   install.packages("rgdal")
@@ -39,6 +47,7 @@ if(!require(dplyr)){
 }
 
 
+#############################################################################################################
 
 # Set Main Directory 
 
@@ -54,8 +63,7 @@ dir.create("02_Raster", showWarnings = FALSE)
 Raster_Folder <- paste0(Main_Folder,"/02_Vector")
 
 
-
-
+#############################################################################################################
 
 # Download Data sets
 
@@ -65,7 +73,7 @@ Study_Area <- file.path("./Vineyard.zip")
 
 Shape_URL <- "https://github.com/Ioadidaiz/MB-2/raw/main/Vineyard.zip"
 
-# Here is necessary to check if the data was downloaded and then unzip the content body water .Tiff in Chile
+
 if (!file.exists(Study_Area)) {
   download.file(Shape_URL ,Study_Area, mode="wb")
   unzip(Study_Area, exdir = file.path("./01_Vector"),overwrite = TRUE)
@@ -102,7 +110,7 @@ S2A_Vineyards <- "https://github.com/Ioadidaiz/MB-2/raw/main/Raster.zip"
 
 Raster <- file.path("./Raster.zip")
 
-# Here is necessary to check if the data was downloaded and then unzip the content body water .Tiff in Chile
+
 if (!file.exists(Raster)) {
   download.file(S2A_Vineyards ,Raster, mode="wb")
   unzip(Raster, exdir = file.path("./02_Raster"),overwrite = TRUE)
