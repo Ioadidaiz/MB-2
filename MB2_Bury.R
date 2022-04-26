@@ -46,6 +46,11 @@ if(!require(dplyr)){
   library(dplyr)
 }
 
+if(!require(ggplot2)){
+  install.packages("ggplot2")
+  library(ggplot2)
+}
+
 
 #############################################################################################################
 
@@ -326,12 +331,6 @@ NDVI_2021    <- cbind(NDVI_P_Feb,NDVI_P_March,NDVI_P_April,NDVI_P_May, NDVI_P_Ju
 
 #############################################################################################################
 
-# rename Columns
-
-
-colnames = c("NFeb","NMar","NApr","NMay","NJune","NJuly","NAug","NSept") 
-
-
 ######################    clear Environment 
 
 rm(Plots)
@@ -339,5 +338,21 @@ rm(RandomPlots)
 
 
 gc()
+
+
+NDVI_2021_df <- as.data.frame(NDVI_2021)
+
+# delete unused columns     
+
+NDVI_2021_df <- NDVI_2021_df[,c(2,4,6,8,10,12,14,16)]
+
+# rename columns
+
+names(NDVI_2021_df) <- c("NDVI_Feb","NDVI_March","NDVI_April","NDVI_May","NDVI_June","NDVI_July","NDVI_August","NDVI_September")
+
+
+
+
+# NDVI Timeseries per plot
 
 
