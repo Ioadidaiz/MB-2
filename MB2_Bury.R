@@ -81,16 +81,17 @@ if (!file.exists(Study_Area)) {
   unzip(Study_Area, exdir = file.path("./01_Vector"),overwrite = TRUE)
 }
 
+#############################################################################################################
 
 ## Sentinel 2 Data
 
 
 
-# We use Preprocessed Level 2A Sentinel Data with BOA Data
+# Here we use Preprocessed Level 2A Sentinel Data with BOA Data
 
-# https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-2-msi/product-types/level-2a
+# Dateset Description: https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-2-msi/product-types/level-2a
 
-# The S2A Data was filtered and downloaded via Google Earth Engine () as the official repository lacks of available data
+# The S2A Data was filtered for Area of Interest, Bands (4 and 8), Cloud Cover and Time span. This filtered data is then downloaded via Google Earth Engine 
 
 # January     :   None (clouds)
 # Februaray   :   COPERNICUS/S2_SR/20210213T103039_20210213T103035_T32UNA
@@ -105,6 +106,11 @@ if (!file.exists(Study_Area)) {
 # November    :   None (clouds)
 # December    :   None (clouds)
 
+
+#############################################################################################################
+
+
+# Download filtered Raster Data
 
 S2A_Vineyards <- "https://github.com/Ioadidaiz/MB-2/raw/main/Raster.zip"
 
@@ -131,7 +137,7 @@ rm(Vec_Folder)
 
 gc()
 
-
+#############################################################################################################
 
 # load Shapefile
 
@@ -148,6 +154,8 @@ S2A_July <- rast("./02_Raster/S2A_18_07_21.tif")
 S2A_August <- rast("./02_Raster/S2A_14_08_21.tif")
 S2A_Sept <- rast("./02_Raster/S2A_06_09_21.tif")
 
+
+#############################################################################################################
 
 # Function for NDVI 
 
@@ -262,12 +270,20 @@ rm(S2A_Sept)
 
 gc()
 
+#############################################################################################################
+
 #### stack NDVI Raster
 
 
 NDVI_R_2021 <- c(NDVI_Feb,NDVI_March,NDVI_April,NDVI_May,NDVI_June,NDVI_July,NDVI_August,NDVI_September)
 
+#############################################################################################################
+
+# Plot all NDVI_Months
+
 plot(NDVI_R_2021)
+
+#############################################################################################################
 
 ## Download Random Plots
 
@@ -283,9 +299,13 @@ if (!file.exists(RandomPlots)) {
   unzip(RandomPlots, exdir = file.path("./01_Vector"),overwrite = TRUE)
 }
 
+#############################################################################################################
+
 ### load Plots
 
 Plots <- st_read("./01_Vector/Plots.shp") 
+
+#############################################################################################################
 
 ## Extract NDVI Values
 
@@ -298,7 +318,13 @@ NDVI_P_July   <- terra::extract(NDVI_July, vect(Plots))
 NDVI_P_August <- terra::extract(NDVI_August, vect(Plots))
 NDVI_P_Sept   <- terra::extract(NDVI_September, vect(Plots))
 
+#############################################################################################################
+
+# Combine extracted Values
+
 NDVI_2021    <- cbind(NDVI_P_Feb,NDVI_P_March,NDVI_P_April,NDVI_P_May, NDVI_P_June,NDVI_P_July,NDVI_P_August, NDVI_P_Sept)
+
+#############################################################################################################
 
 # rename Columns
 
